@@ -1,0 +1,147 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+
+	<title>Dashboard with Storage</title>
+
+</head>
+
+<body class="bg-light">
+
+	<div class="container">
+		<div class="pt-5 pb-3 text-center">
+			<h2>Dashboard</h2>
+			<p id="msg" class="text-success"></p>
+		</div>
+
+		<div class="row">
+			<div class="col-md-12">
+				<h4 class="mb-3">User Information</h4>
+				<form id="user-form">
+					<div class="row">
+						<div class="col-md-6 mb-3">
+							<label for="firstName">First name</label>
+							<input type="text" class="form-control" id="firstName">
+						</div>
+						<div class="col-md-6 mb-3">
+							<label for="lastName">Last name</label>
+							<input type="text" class="form-control" id="lastName">
+						</div>
+					</div>
+
+					<div class="mb-3">
+						<label for="instagram">Instagram</label>
+						<div class="input-group">
+							<div class="input-group-prepend">
+								<span class="input-group-text">@</span>
+							</div>
+							<input type="text" class="form-control" id="instagram">
+						</div>
+					</div>
+
+					<div class="mb-3">
+						<label for="twitter">Twitter</label>
+						<div class="input-group">
+							<div class="input-group-prepend">
+								<span class="input-group-text">@</span>
+							</div>
+							<input type="text" class="form-control" id="twitter">
+						</div>
+					</div>
+
+					<button class="btn btn-primary btn-lg btn-block mt-4" type="submit">Save</button>
+					<button id="clear-btn" class="btn btn-secondary btn-lg btn-block mt-4" type="button">Clear</button>
+				</form>
+			</div>
+		</div>
+
+		<footer class="my-5 text-muted text-center text-small">
+			<p class="mb-1">&copy; 2019 ITP Web Dev</p>
+		</footer>
+	</div>
+
+<script>
+	
+	document.querySelector('#user-form').onsubmit = function(){
+			const firstName = document.querySelector('#firstName').value.trim();
+			const lastName = document.querySelector('#lastName').value.trim();
+			const twitter = document.querySelector('#twitter').value.trim();
+			const instagram = document.querySelector('#instagram').value.trim();
+
+			
+		const socialMedia = {
+			twitterHandle: twitter,
+			instagramHandle: instagram
+		}
+		const socialM = JSON.stringify(socialMedia)
+		const socialObjects = JSON.parse(socialM)
+		localStorage.socials = socialM
+			
+			// Check whether 'first name' field is empty.
+			if ( firstName.length == 0 ) {
+				document.querySelector('#firstName').classList.add('is-invalid');
+			} else {
+				document.querySelector('#firstName').classList.remove('is-invalid');
+			}
+			// Check whether 'last name' field is empty.
+			if ( lastName.length == 0 ) {
+				document.querySelector('#lastName').classList.add('is-invalid');
+			} else {
+				document.querySelector('#lastName').classList.remove('is-invalid');
+			}
+
+
+
+			if ( firstName.length > 0 && lastName.length > 0 ) {
+				// Clear form fields.
+				document.querySelector('#firstName').value = '';
+				document.querySelector('#lastName').value = '';
+				document.querySelector('#twitter').value = '';
+				document.querySelector('#instagram').value = '';
+
+				localStorage.firstName = firstName
+				localStorage.lastName = lastName
+
+				document.querySelector("#msg").innerHTML= "User information saved."
+
+
+			} // END if ( name.length > 0 && email.length > 0 )
+
+			if (localStorage.firstName) {
+				console.log(localStorage.firstName)
+			} else {
+				console.log("First name is not set")
+			}
+		
+			if (localStorage.lastName) {
+				console.log(localStorage.lastName)
+			} else {
+				console.log("Last name is not set")
+			}
+			if (twitter) {
+				console.log(twitter)
+			} else {
+				console.log("Twitter is not set")
+			}
+			if (instagram) {
+				console.log(instagram)
+			} else {
+				console.log("Instagram is not set")
+			}
+
+		document.querySelector("#clear-btn").onclick = () => {
+			localStorage.clear()
+			document.querySelector("#msg").innerHTML= "User information cleared."
+		}
+
+			return false;
+		};
+
+
+
+</script>
+</body>
+</html>
